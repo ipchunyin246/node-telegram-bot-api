@@ -7,7 +7,6 @@ const TelegramBotPolling = require('./telegramPolling');
 const debug = require('debug')('node-telegram-bot-api');
 const EventEmitter = require('eventemitter3');
 const fileType = require('file-type');
-const Promise = require('bluebird');
 const request = require('request-promise');
 const streamedRequest = require('request');
 const qs = require('querystring');
@@ -18,6 +17,7 @@ const URL = require('url');
 const fs = require('fs');
 const pump = require('pump');
 const deprecate = require('depd')('node-telegram-bot-api');
+let Promise = require('bluebird');
 
 const _messageTypes = [
   'audio',
@@ -50,6 +50,7 @@ const _deprecatedMessageTypes = [
 ];
 
 // enable cancellation
+deprecate('Automatic enabling of cancellation of promises is deprecated. See https://github.com/yagop/node-telegram-bot-api/issues/319.');
 Promise.config({
   cancellation: true,
 });
@@ -62,6 +63,19 @@ class TelegramBot extends EventEmitter {
 
   static get messageTypes() {
     return _messageTypes;
+  }
+
+  /**
+   * Change Promise library used internally, for all existing and new
+   * instances.
+   * @param  {Function} customPromise
+   *
+   * @example
+   * const TelegramBot = require('node-telegram-bot-api');
+   * TelegramBot.Promise = myPromise;
+   */
+  static set Promise(customPromise) {
+    Promise = customPromise;
   }
 
   on(event, listener) {

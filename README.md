@@ -22,7 +22,7 @@ npm install --save node-telegram-bot-api
 const TelegramBot = require('node-telegram-bot-api');
 
 // replace the value below with the Telegram token you receive from @BotFather
-const token = 'YOUR_TELEGRAM_BOT_TOKEN';
+const token = '323256690:AAEm40cNOEYaQSTDbF0blykbXh77S261J_Y';
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});

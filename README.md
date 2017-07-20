@@ -27,6 +27,13 @@ const token = '323256690:AAEm40cNOEYaQSTDbF0blykbXh77S261J_Y';
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
 
+
+bot.onText(/\/start/, message => {
+  console.log(message); // for debug
+  const chatId = message.chat.id;
+  bot.sendMessage(chatId, 'Hello World');
+});
+
 // Matches "/echo [whatever]"
 bot.onText(/\/start (.+)/, (msg, match) => {
   // 'msg' is the received Message from Telegram
